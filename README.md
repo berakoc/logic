@@ -1,6 +1,6 @@
 # Logic
 ## What is Logic?
-Logic is library for handling logical operations with functional programming.
+Logic is a library for handling logical operations with functional programming.
 
 ## Installation
 To use with node:
