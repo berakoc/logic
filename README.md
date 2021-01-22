@@ -1,6 +1,6 @@
 # Logic
 ## What is Logic?
-Logic is library which supports functional chaining and uses functional programming paradigms like Monads.
+Logic is library for handling logical operations with functional programming.
 
 ## Installation
 To use with node:
