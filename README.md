@@ -22,7 +22,7 @@ Logic is a function that utilises functional chaining:
 const amIHappy = Logic(isTodayHoliday()).or(isWeatherSunny()).value
 ```
 Logic also supports autoboxing `Logic objects`. Hence you have to use `value` property when you want to get the boolean value since each operation returns another `Logic Object` instead of `Boolean` value:
-```
+```js
 const result = Logic(Logic(true).xor(false)).value
 ```
 `Logic` supports 4 basic logical operators: `and`, `or`, `xor` and `not`
