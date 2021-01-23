@@ -1,5 +1,6 @@
 - [x] Add boolean constants
 - [x] Add ternary if function and Identity function for utils
 - [x] Add badges and CircleCI support
-- [ ] Value injection after the last operation, via a signal
-- [ ] Combine operations and generate a new function
+- [ ] ~~Value injection after the last operation, via a signal~~
+- [ ] Combine operations and generate a new function (For further development)
+

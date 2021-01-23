@@ -1,5 +1,7 @@
-const { is, type, isNil, identity } = require('./utils');
+const { is, type, isNil, identity, curry, arraysOfKeyValuePairToObject } = require('./utils');
 
+const T = true;
+const F = false;
 /**
  * Does the exact thing of the ternary operator but as a function.
  * @param {Boolean} condition A condition to be fulfilled
@@ -20,9 +22,7 @@ const Bool = (v) =>
         [v]
     );
 const placeholderKey = '@@logical/not';
-const __ = { [placeholderKey]: true };
-const T = true;
-const F = false;
+const __ = { [placeholderKey]: T };
 Object.freeze(__);
 
 /**
@@ -53,12 +53,18 @@ const Logic = (b, v = null) => {
     return __logic__;
 };
 
+const functionNames = ['and', 'or', 'xor', 'not'];
+const logicFunctions = [(x, y) => x && y, (x, y) => x || y, (x, y) => (x || y) && !(x && y)]
+    .map(curry)
+    .concat((x) => !x);
+
 module.exports = {
+    T,
+    F,
     ternary,
     Bool,
     placeholderKey,
     __,
-    T,
-    F,
-    Logic
+    Logic,
+    ...arraysOfKeyValuePairToObject(functionNames, logicFunctions)
 };

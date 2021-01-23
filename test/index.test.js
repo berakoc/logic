@@ -1,5 +1,5 @@
 const { __, Logic, placeholderKey, ternary, Bool } = require('../src/index');
-const { is, type, isNil, identity } = require('../src/utils');
+const { is, type, isNil, identity, curry, arraysOfKeyValuePairToObject } = require('../src/utils');
 
 describe('Test Utility Functions', () => {
     it('should check if a value is the same with another', () => {
@@ -28,27 +28,45 @@ describe('Test Utility Functions', () => {
         const value = '';
         const logicValue = { value: false };
         const booleanValue = true;
-        const expected1 = Bool(value);
-        const expected2 = Bool(logicValue);
-        const expected3 = Bool(booleanValue);
-        expect(expected1).toBe(false);
-        expect(expected2).toBe(false);
-        expect(expected3).toBe(true);
+        const actual1 = Bool(value);
+        const actual2 = Bool(logicValue);
+        const actual3 = Bool(booleanValue);
+        expect(actual1).toBe(false);
+        expect(actual2).toBe(false);
+        expect(actual3).toBe(true);
     });
 
     it('should return the identical value', () => {
-        const expected = identity(7);
-        expect(expected).toBe(7);
+        const actual = identity(7);
+        expect(actual).toBe(7);
     });
 
     it('should run a ternary operation successfully', () => {
         const t = (x) => x % 7;
         const f = (x) => x + 1;
         const deps = [20];
-        const expected1 = ternary(true, t, f, deps);
-        const expected2 = ternary(false, t, f, deps);
-        expect(expected1).toBe(6);
-        expect(expected2).toBe(21);
+        const actual1 = ternary(true, t, f, deps);
+        const actual2 = ternary(false, t, f, deps);
+        expect(actual1).toBe(6);
+        expect(actual2).toBe(21);
+    });
+
+    it('should curry a second arity functions', () => {
+        const add = (x, y) => x + y;
+        const curriedAdd = curry(add);
+        expect(curriedAdd(2, 3)).toBe(5);
+        expect(curriedAdd(2)(3)).toBe(5);
+    });
+
+    it('should convert arrays of key and value pair to an object', () => {
+        const keys = ['apple', 'banana'];
+        const values = ['red', 'yellow'];
+        const actual = arraysOfKeyValuePairToObject(keys, values);
+        const expected = {
+            apple: 'red',
+            banana: 'yellow'
+        };
+        expect(actual).toStrictEqual(expected);
     });
 });
 
@@ -66,47 +84,47 @@ describe('Test Logic Functions and the Placeholder(__)', () => {
         const pred1 = (v) => v > 3;
         const pred2 = (v) => v < 7;
         const valueSet = [1, 5, 9];
-        const expected1 = Logic(pred1(valueSet[0])).and(pred2(valueSet[0])).value;
-        const expected2 = Logic(pred1(valueSet[1])).and(pred2(valueSet[1])).value;
-        const expected3 = Logic(pred1(valueSet[2])).and(pred2(valueSet[2])).value;
-        const expected4 = Logic(false).and(false).value;
-        expect(expected1).toBe(false);
-        expect(expected2).toBe(true);
-        expect(expected3).toBe(false);
-        expect(expected4).toBe(false);
+        const actual1 = Logic(pred1(valueSet[0])).and(pred2(valueSet[0])).value;
+        const actual2 = Logic(pred1(valueSet[1])).and(pred2(valueSet[1])).value;
+        const actual3 = Logic(pred1(valueSet[2])).and(pred2(valueSet[2])).value;
+        const actual4 = Logic(false).and(false).value;
+        expect(actual1).toBe(false);
+        expect(actual2).toBe(true);
+        expect(actual3).toBe(false);
+        expect(actual4).toBe(false);
     });
 
     it('should run or function properly', () => {
         const pred1 = (v) => v > 3;
         const pred2 = (v) => v < 7;
         const valueSet = [1, 5, 9];
-        const expected1 = Logic(pred1(valueSet[0])).or(pred2(valueSet[0])).value;
-        const expected2 = Logic(pred1(valueSet[1])).or(pred2(valueSet[1])).value;
-        const expected3 = Logic(pred1(valueSet[2])).or(pred2(valueSet[2])).value;
-        const expected4 = Logic(false).or(false).value;
-        expect(expected1).toBe(true);
-        expect(expected2).toBe(true);
-        expect(expected3).toBe(true);
-        expect(expected4).toBe(false);
+        const actual1 = Logic(pred1(valueSet[0])).or(pred2(valueSet[0])).value;
+        const actual2 = Logic(pred1(valueSet[1])).or(pred2(valueSet[1])).value;
+        const actual3 = Logic(pred1(valueSet[2])).or(pred2(valueSet[2])).value;
+        const actual4 = Logic(false).or(false).value;
+        expect(actual1).toBe(true);
+        expect(actual2).toBe(true);
+        expect(actual3).toBe(true);
+        expect(actual4).toBe(false);
     });
 
     it('should run xor function properly', () => {
         const pred1 = (v) => v > 3;
         const pred2 = (v) => v < 7;
         const valueSet = [1, 5, 9];
-        const expected1 = Logic(pred1(valueSet[0])).xor(pred2(valueSet[0])).value;
-        const expected2 = Logic(pred1(valueSet[1])).xor(pred2(valueSet[1])).value;
-        const expected3 = Logic(pred1(valueSet[2])).xor(pred2(valueSet[2])).value;
-        const expected4 = Logic(false).xor(false).value;
-        expect(expected1).toBe(true);
-        expect(expected2).toBe(false);
-        expect(expected3).toBe(true);
-        expect(expected4).toBe(false);
+        const actual1 = Logic(pred1(valueSet[0])).xor(pred2(valueSet[0])).value;
+        const actual2 = Logic(pred1(valueSet[1])).xor(pred2(valueSet[1])).value;
+        const actual3 = Logic(pred1(valueSet[2])).xor(pred2(valueSet[2])).value;
+        const actual4 = Logic(false).xor(false).value;
+        expect(actual1).toBe(true);
+        expect(actual2).toBe(false);
+        expect(actual3).toBe(true);
+        expect(actual4).toBe(false);
     });
 
     it('should run not function properly', () => {
         const value = true;
-        const expectedValue = false;
-        expect(Logic(__, Logic(value)).value).toBe(expectedValue);
+        const expected = false;
+        expect(Logic(__, Logic(value)).value).toBe(expected);
     });
 });
