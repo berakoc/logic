@@ -1,5 +1,9 @@
 # Logic
+![GitHub](https://img.shields.io/github/license/MuhammedBeraKoc/logic?color=f72585)
 ![npm](https://img.shields.io/npm/v/lgc?color=4361ee)
+[![build](https://circleci.com/gh/MuhammedBeraKoc/logic.svg?style=shield)](https://app.circleci.com/pipelines/github/MuhammedBeraKoc/logic)
+![David](https://img.shields.io/david/dev/MuhammedBeraKoc/logic)
+
 ## What is Logic?
 Logic is a library for handling logical operations with functional programming.
 
