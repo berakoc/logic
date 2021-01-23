@@ -1,2 +1,5 @@
 - [x] Add boolean constants
 - [x] Add ternary if function and Identity function for utils
+- [ ] Add badges
+- [ ] Value injection after the last operation, via a signal
+- [ ] combine operations and generate a new function
