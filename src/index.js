@@ -1,12 +1,28 @@
-const { is, type, isNil } = require('./utils');
+const { is, type, isNil, identity } = require('./utils');
 
+/**
+ * Does the exact thing of the ternary operator but as a function.
+ * @param {Boolean} condition A condition to be fulfilled
+ * @param {Function} t A function that will run when the condition is true
+ * @param {Function} f A function to be run when the condition is false
+ * @param {Array} deps An array of values to be used in return functions
+ */
+const ternary = (condition, t, f, deps) => (condition ? t(...deps) : f(...deps));
 /**
  * Converts a value to Boolean type if it is not. Returns the value if it is Boolean.
  * @param {any} v A value
  */
-const Bool = (v) => (is(type(v), 'boolean') ? v : Boolean(isNil(v.value) ? v : v.value));
+const Bool = (v) =>
+    ternary(
+        is(type(v), 'boolean'),
+        identity,
+        (v) => Boolean(ternary(isNil(v.value), identity, (v) => v.value, [v])),
+        [v]
+    );
 const placeholderKey = '@@logical/not';
 const __ = { [placeholderKey]: true };
+const T = true;
+const F = false;
 Object.freeze(__);
 
 /**
@@ -38,7 +54,11 @@ const Logic = (b, v = null) => {
 };
 
 module.exports = {
+    ternary,
+    Bool,
     placeholderKey,
     __,
+    T,
+    F,
     Logic
 };

@@ -1,0 +1,2 @@
+- [x] Add boolean constants
+- [x] Add ternary if function and Identity function for utils

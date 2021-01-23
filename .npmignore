@@ -5,3 +5,4 @@ test
 .prettierrc
 babel.config.json
 package.lock.json
+future.md

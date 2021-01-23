@@ -38,5 +38,11 @@ const result = Logic(__, gte(3, 5)).value
 // Even though we have true as our previous value, it will be discarded in not operation
 const isTrue = Logic(true).not(false).value
 ```
+### Utility Functions
+`ternary(predicate: (any) => Boolean, trueFunction: Function, falseFunction: Function, deps: Array)`: Functional implementation of ternary if operator.  
+`Bool(v: any)`: Takes a value and converts it to the boolean. Applicable for `Logic objects`.  
+`T: true`: A variable for `true`  
+`F: false`: A variable for `false`
+
 ## License
 The project is licensed under MIT Open-source License.

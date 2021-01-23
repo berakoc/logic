@@ -1,5 +1,5 @@
-const { __, Logic, placeholderKey } = require('../src/index');
-const { is, type, isNil } = require('../src/utils');
+const { __, Logic, placeholderKey, ternary, Bool } = require('../src/index');
+const { is, type, isNil, identity } = require('../src/utils');
 
 describe('Test Utility Functions', () => {
     it('should check if a value is the same with another', () => {
@@ -18,11 +18,38 @@ describe('Test Utility Functions', () => {
     });
 
     it('should detect if the value type is nil(null or undefined)', () => {
-        const nullish = null
-        const expected = true
-        expect(isNil(nullish)).toBe(true)
-        expect(isNil(false)).toBe(false)
-    })
+        const nullish = null;
+        const expected = true;
+        expect(isNil(nullish)).toBe(expected);
+        expect(isNil(false)).toBe(false);
+    });
+
+    it('should booleanise a value', () => {
+        const value = '';
+        const logicValue = { value: false };
+        const booleanValue = true;
+        const expected1 = Bool(value);
+        const expected2 = Bool(logicValue);
+        const expected3 = Bool(booleanValue);
+        expect(expected1).toBe(false);
+        expect(expected2).toBe(false);
+        expect(expected3).toBe(true);
+    });
+
+    it('should return the identical value', () => {
+        const expected = identity(7);
+        expect(expected).toBe(7);
+    });
+
+    it('should run a ternary operation successfully', () => {
+        const t = (x) => x % 7;
+        const f = (x) => x + 1;
+        const deps = [20];
+        const expected1 = ternary(true, t, f, deps);
+        const expected2 = ternary(false, t, f, deps);
+        expect(expected1).toBe(6);
+        expect(expected2).toBe(21);
+    });
 });
 
 describe('Test Logic Functions and the Placeholder(__)', () => {
@@ -78,8 +105,8 @@ describe('Test Logic Functions and the Placeholder(__)', () => {
     });
 
     it('should run not function properly', () => {
-        const value = true
-        const expectedValue = false
-        expect(Logic(__, Logic(value)).value).toBe(expectedValue)
-    })
+        const value = true;
+        const expectedValue = false;
+        expect(Logic(__, Logic(value)).value).toBe(expectedValue);
+    });
 });
