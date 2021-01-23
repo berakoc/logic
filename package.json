@@ -9,7 +9,7 @@
     "build:clear": "del-cli --force dist",
     "build:transpile": "babel src -d dist",
     "build:compress": "uglifyjs dist/utils.js dist/index.js -o dist/index.min.js -c -m",
-    "build": "npm run format && npm run test && npm run build:clear && npm run build:transpile",
+    "build": "npm run format && npm run build:clear && npm run build:transpile",
     "format:test": "prettier --check --write \"test\"",
     "test": "npm run format:test && jest"
   },

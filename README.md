@@ -1,4 +1,5 @@
 # Logic
+![npm](https://img.shields.io/npm/v/lgc?color=4361ee)
 ## What is Logic?
 Logic is a library for handling logical operations with functional programming.
 
