@@ -1,5 +1,13 @@
 const { __, Logic, placeholderKey, ternary, Bool } = require('../src/index');
-const { is, type, isNil, identity, curry, arraysOfKeyValuePairToObject } = require('../src/utils');
+const {
+    is,
+    type,
+    isNil,
+    identity,
+    curry,
+    fromEntries,
+    arraysOfKeyValuePairToObject
+} = require('../src/utils');
 
 describe('Test Utility Functions', () => {
     it('should check if a value is the same with another', () => {
@@ -65,6 +73,14 @@ describe('Test Utility Functions', () => {
         const expected = {
             apple: 'red',
             banana: 'yellow'
+        };
+        expect(actual).toStrictEqual(expected);
+    });
+    it('should return an object from key value pair', () => {
+        const keyValuePair = new Map([['key', '@secret']]);
+        const actual = fromEntries(keyValuePair);
+        const expected = {
+            key: '@secret'
         };
         expect(actual).toStrictEqual(expected);
     });

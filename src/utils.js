@@ -8,12 +8,12 @@ const identity = (x) => x;
  */
 const fromEntries = (keyValuePair) => {
     if ((Array.isArray(keyValuePair) || keyValuePair instanceof Map) && !isNil(keyValuePair)) {
-        const result = {}
-        Array.from(keyValuePair).forEach(([key, value]) => result[key] = value)
-        return result
+        const result = {};
+        Array.from(keyValuePair).forEach(([key, value]) => (result[key] = value));
+        return result;
     }
-    throw new Error(`${keyValuePair} is not iterable`)
-}
+    throw new Error(`${keyValuePair} is not iterable`);
+};
 /**
  * Curries the given function
  * @param {Function} f A function with 2nd arity
@@ -29,5 +29,6 @@ module.exports = {
     isNil,
     identity,
     curry,
+    fromEntries,
     arraysOfKeyValuePairToObject
 };
