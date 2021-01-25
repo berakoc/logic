@@ -1,5 +1,5 @@
-const { __, Logic, placeholderKey, ternary, Bool } = require('../src/index');
-const {
+import { __, Logic, placeholderKey, ternary, Bool } from '../src/index';
+import {
     is,
     type,
     isNil,
@@ -7,7 +7,7 @@ const {
     curry,
     fromEntries,
     arraysOfKeyValuePairToObject
-} = require('../src/utils');
+} from '../src/utils';
 
 describe('Test Utility Functions', () => {
     it('should check if a value is the same with another', () => {
@@ -50,8 +50,8 @@ describe('Test Utility Functions', () => {
     });
 
     it('should run a ternary operation successfully', () => {
-        const t = (x) => x % 7;
-        const f = (x) => x + 1;
+        const t = (x: number) => x % 7;
+        const f = (x: number) => x + 1;
         const deps = [20];
         const actual1 = ternary(true, t, f, deps);
         const actual2 = ternary(false, t, f, deps);
@@ -60,7 +60,7 @@ describe('Test Utility Functions', () => {
     });
 
     it('should curry a second arity functions', () => {
-        const add = (x, y) => x + y;
+        const add = (x: number, y: number) => x + y;
         const curriedAdd = curry(add);
         expect(curriedAdd(2, 3)).toBe(5);
         expect(curriedAdd(2)(3)).toBe(5);
@@ -88,7 +88,7 @@ describe('Test Utility Functions', () => {
 
 describe('Test Logic Functions and the Placeholder(__)', () => {
     it('should validate the placeholder object', () => {
-        const isTheOnlyKey = (o, key) => {
+        const isTheOnlyKey = (o: object, key: string) => {
             const keys = Object.keys(o);
             return is(keys.length, 1) && is(keys[0], key);
         };
@@ -97,8 +97,8 @@ describe('Test Logic Functions and the Placeholder(__)', () => {
     });
 
     it('should run and function properly', () => {
-        const pred1 = (v) => v > 3;
-        const pred2 = (v) => v < 7;
+        const pred1 = (v: number) => v > 3;
+        const pred2 = (v: number) => v < 7;
         const valueSet = [1, 5, 9];
         const actual1 = Logic(pred1(valueSet[0])).and(pred2(valueSet[0])).value;
         const actual2 = Logic(pred1(valueSet[1])).and(pred2(valueSet[1])).value;
@@ -111,8 +111,8 @@ describe('Test Logic Functions and the Placeholder(__)', () => {
     });
 
     it('should run or function properly', () => {
-        const pred1 = (v) => v > 3;
-        const pred2 = (v) => v < 7;
+        const pred1 = (v: number) => v > 3;
+        const pred2 = (v: number) => v < 7;
         const valueSet = [1, 5, 9];
         const actual1 = Logic(pred1(valueSet[0])).or(pred2(valueSet[0])).value;
         const actual2 = Logic(pred1(valueSet[1])).or(pred2(valueSet[1])).value;
@@ -125,8 +125,8 @@ describe('Test Logic Functions and the Placeholder(__)', () => {
     });
 
     it('should run xor function properly', () => {
-        const pred1 = (v) => v > 3;
-        const pred2 = (v) => v < 7;
+        const pred1 = (v: number) => v > 3;
+        const pred2 = (v: number) => v < 7;
         const valueSet = [1, 5, 9];
         const actual1 = Logic(pred1(valueSet[0])).xor(pred2(valueSet[0])).value;
         const actual2 = Logic(pred1(valueSet[1])).xor(pred2(valueSet[1])).value;

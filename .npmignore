@@ -7,3 +7,6 @@ babel.config.json
 package.lock.json
 future.md
 proto
+.circleci
+tsconfig.json
+jest.config.js
