@@ -1,4 +1,4 @@
-import { __, Logic, placeholderKey, ternary, Bool } from '../src/index';
+import { __, Logic, placeholderKey, ternary, Bool, and, or, xor, not } from '../src/index';
 import {
     is,
     type,
@@ -6,7 +6,8 @@ import {
     identity,
     curry,
     fromEntries,
-    arraysOfKeyValuePairToObject
+    arraysOfKeyValuePairToObject,
+    CurriedBiFunction
 } from '../src/utils';
 
 describe('Test Utility Functions', () => {
@@ -87,6 +88,20 @@ describe('Test Utility Functions', () => {
 });
 
 describe('Test Logic Functions and the Placeholder(__)', () => {
+    const testLogic = (
+        op: CurriedBiFunction<boolean, boolean, boolean> | ((b: boolean) => boolean),
+        test: Function,
+        resultSet: boolean[],
+        isUnary = false
+    ) => {
+        for (let i = 0; i < 2; ++i) {
+            for (let j = 0; j < Number(!isUnary && 2); ++j) {
+                test(resultSet[i * 2 + j], op(Boolean(i), Boolean(j)));
+            }
+            if (isUnary) test(resultSet[i], op(Boolean(i)));
+        }
+    };
+
     it('should validate the placeholder object', () => {
         const isTheOnlyKey = (o: object, key: string) => {
             const keys = Object.keys(o);
@@ -142,5 +157,41 @@ describe('Test Logic Functions and the Placeholder(__)', () => {
         const value = true;
         const expected = false;
         expect(Logic(__, Logic(value)).value).toBe(expected);
+    });
+
+    it('should run and operator', () => {
+        testLogic(and, (expected: any, actual: any) => expect(expected).toBe(actual), [
+            false,
+            false,
+            false,
+            true
+        ]);
+    });
+
+    it('should run or operator', () => {
+        testLogic(or, (expected: any, actual: any) => expect(expected).toBe(actual), [
+            false,
+            true,
+            true,
+            true
+        ]);
+    });
+
+    it('should run not operator', () => {
+        testLogic(
+            not,
+            (expected: any, actual: any) => expect(expected).toBe(actual),
+            [true, false],
+            true
+        );
+    });
+
+    it('should run xor operator', () => {
+        testLogic(xor, (expected: any, actual: any) => expect(expected).toBe(actual), [
+            false,
+            true,
+            true,
+            false
+        ]);
     });
 });

@@ -69,6 +69,9 @@ export const Logic = (b: boolean | any, v: any = null): LogicObject => {
     return __logic__;
 };
 
+// Shorthand version of Logic
+export const L = Logic;
+
 const functionNames = ['and', 'or', 'xor', 'not'];
 const logicFunctions: Array<
     CurriedBiFunction<boolean, boolean, boolean> | ((x: boolean) => boolean)
@@ -79,7 +82,7 @@ const logicFunctions: Array<
 ].map(curry);
 const updatedLogicFunctions = logicFunctions.concat((x: boolean) => !x);
 const logicals = { ...arraysOfKeyValuePairToObject(functionNames, updatedLogicFunctions) };
-type NativeLogicUnit = (a: boolean, b: boolean) => boolean;
+type NativeLogicUnit = CurriedBiFunction<boolean, boolean, boolean>;
 type NativeLogicNot = (a: boolean) => boolean;
 
 export const and: NativeLogicUnit = logicals['and'];

@@ -18,6 +18,7 @@ const lgc = require('lgc')
 ```
 
 ## Usage
+### `Logic`
 In the heart of the library, there lies `Logic` function. Not to be confused, it is not a constructor. However it is the function that we use to create logical fragments. You can import `Logic` directly from library:
 ```js
 const { Logic } = require('lgc')
@@ -43,6 +44,29 @@ const result = Logic(__, gte(3, 5)).value
 // Even though we have true as our previous value, it will be discarded in not operation
 const isTrue = Logic(true).not(false).value
 ```
+### A Basic Example
+Let us try to convert `(x || y) && !(x ^ (y && !x))` to a reusable logical fragment chain:
+```js
+// L is just a shorthand version of Logic
+const { L } = require('lgc')
+const myLogicalFragment = (x, y) => L(L(x).or(y)).and(L(__, L(L(x).xor(L(y).and(L(__, x))))))
+```
+Quite a mess, isn't it? No worry! There is another way of computing logical operations using `Logic` library. However by chaining we can access and use previous values. This is a big plus which makes up for the enormous complexity.
+### Pure Operators
+`Logic` library is not only restricted with Logic function. There is a purer(!) way of using logical operators:
+```js
+const { and, or, not, xor } = require('lgc')
+console.log(and(true)(false))
+console.log(or(false, false))
+console.log(not(false))
+console.log(xor(true)(true))
+```
+Using those basic functions you can easily compute the result of a logical operation. They are also curried which means they can be either used as `op(x, y)` or `op(x)(y)` which let's you those operators with a constant parameter:
+```js
+const alwaysFalse = and(false)
+console.log(alwaysFalse(true))
+```
+They can't be chained contrary to `Logic object`. 
 ### Utility Functions
 `ternary(predicate: (any) => Boolean, trueFunction: Function, falseFunction: Function, deps: Array)`: Functional implementation of ternary if operator.  
 `Bool(v: any)`: Takes a value and converts it to the boolean. Applicable for `Logic objects`.  

@@ -3,5 +3,4 @@
 - [x] Add badges and CircleCI support
 - [ ] ~~Value injection after the last operation, via a signal~~
 - [ ] Combine operations and generate a new function (For further development)
-- [ ] Add TS support
-
+- [x] Add TS support

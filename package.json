@@ -1,6 +1,6 @@
 {
   "name": "lgc",
-  "version": "0.5.0",
+  "version": "1.0.0",
   "description": "An awesome logic library for JS",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -13,7 +13,9 @@
     "build": "npm run format && npm run build:clear && npm run build:compile && npm run build:transpile && npm run build:compress",
     "format:test": "prettier --check --write \"test/**/*.ts\"",
     "test": "npm run format:test && jest",
-    "status": "npm pack --dry-run"
+    "status": "npm pack --dry-run",
+    "proto": "node proto/app.js",
+    "commit": "npx @berakocc/commitify -p"
   },
   "repository": {
     "type": "git",
